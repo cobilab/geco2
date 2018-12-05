@@ -1,3 +1,3 @@
 language: c
 
-script: make src
+script: cmake src && make
