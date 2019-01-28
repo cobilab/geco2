@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/pratas/geco2)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
+
 <p align="center"><img src="imgs/logo.png" 
 alt="GeCo2" width="300" height="260" border="0" /></p>
 <b>Compress and analyze genomic sequences</b>. As a compression tool, GeCo2 is able to provide additional compression gains over several top specific tools, while as an analysis tool, GeCo2 is able to determine absolute measures, namely for many distance computations, and local measures, such as the information content contained in each element, providing a way to quantify and locate specific genomic events. 
