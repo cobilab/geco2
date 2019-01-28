@@ -295,9 +295,9 @@ CModel **LoadReference(Parameters *P)
   {
   FILE      *Reader = Fopen(P->ref, "r");
   uint32_t  n, k, idxPos;
-  uint64_t  nBases = 0;
+  uint64_t  nBases = 0, y_bases = 0;
   int32_t   idx = 0;
-  uint8_t   *readerBuffer, *symbolBuffer, sym, irSym, type = 0, header = 1, 
+  uint8_t   *readerBuffer, *symbolBuffer, sym, irSym = 0, type = 0, header = 1, 
             line = 0, dna = 0;
   CModel    **cModels;
   #ifdef PROGRESS
@@ -331,6 +331,7 @@ CModel **LoadReference(Parameters *P)
     default: nBases = NDNASyminFile (Reader); break;
     }
 
+  y_bases = 0;
   P->checksum = 0;
   while((k = fread(readerBuffer, 1, BUFFER_SIZE, Reader)))
     for(idxPos = 0 ; idxPos < k ; ++idxPos){
@@ -362,12 +363,16 @@ CModel **LoadReference(Parameters *P)
       for(n = 0 ; n < P->nModels ; ++n)
         if(P->model[n].type == REFERENCE){
           GetPModelIdx(symbolBuffer+idx-1, cModels[n]);
-          UpdateCModelCounter(cModels[n], sym, cModels[n]->pModelIdx);
-          if(cModels[n]->ir == 1){                         // Inverted repeats
+          if(cModels[n]->ir == 1)                        // Inverted repeats
             irSym = GetPModelIdxIR(symbolBuffer+idx, cModels[n]);
-            UpdateCModelCounter(cModels[n], irSym, cModels[n]->pModelIdxIR);
+          // UPDATE ONLY IF IDX LARGER THAT CONTEXT
+          if(y_bases >= cModels[n]->ctx){
+            UpdateCModelCounter(cModels[n], sym, cModels[n]->pModelIdx);
+            if(cModels[n]->ir == 1)                        // Inverted repeats
+              UpdateCModelCounter(cModels[n], irSym, cModels[n]->pModelIdxIR);
             }
           }
+      ++y_bases;
 
       if(++idx == BUFFER_SIZE){
         memcpy(symbolBuffer - BGUARD, symbolBuffer + idx - BGUARD, BGUARD);
