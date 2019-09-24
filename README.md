@@ -104,6 +104,8 @@ If you are not interested in setting the template for each model, then use the l
 
 On using this software/method please cite:
 
+Pratas, Diogo, Morteza Hosseini, and Armando J. Pinho. "GeCo2: An Optimized Tool for Lossless Compression and Analysis of DNA Sequences." International Conference on Practical Applications of Computational Biology & Bioinformatics. Springer, Cham, 2019.
+
 D. Pratas, A. J. Pinho, P. J. S. G. Ferreira. Efficient compression of genomic sequences. Proc. of the Data Compression Conference, DCC-2016, Snowbird, UT, p. 231-240, March 2016.
 
 ## NEW FEATURES IN VERSION 2 ##
