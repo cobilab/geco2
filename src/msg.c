@@ -57,7 +57,8 @@ void ModelsExplanation(void){
   "                   represents the decayment forgetting factor of the    \n"
   "                   substitutional tolerant context model in definition. \n"
   "                   Its definition and use is analogus to [NB_G].        \n"
-  "                                                                        \n"
+  "                                                                        \n");
+  fprintf(stderr,
   "      ... (you may use several target models with custom parameters)    \n"
   "                                                                        \n"
   "      -rm [NB_C]:[NB_D]:[NB_I]:[NB_H]:[NB_G]/[NB_S]:[NB_E]:[NB_A]       \n"
@@ -212,15 +213,16 @@ void PrintMenuDecompression(void){
   "           File(s) to decompress (last argument).                       \n"
   "           For more files use splitting \":\" characters.               \n"
   "           Example: file1.txt:file2.txt:file3.txt.                      \n"
-  "                                                                        \n"
+  "                                                                        \n",
+  VERSION, RELEASE);
+  fprintf(stderr,
   "COPYRIGHT                                                               \n"
   "      Copyright (C) 2014-2019, IEETA, University of Aveiro.             \n"
   "      This is a Free software, under GPLv3. You may redistribute        \n"
   "      copies of it under the terms of the GNU - General Public          \n"
   "      License v3 <http://www.gnu.org/licenses/gpl.html>. There          \n"
   "      is NOT ANY WARRANTY, to the extent permitted by law.              \n"
-  "                                                                        \n",
-  VERSION, RELEASE);
+  "                                                                        \n");
   }
 
 void PrintVersion(void){
