@@ -11,7 +11,7 @@ LIBS   = -lm
 DEPS   = defs.h
 PROGS  = $(BIN)/GeCo2 $(BIN)/GeDe2
 OBJS   = mem.o msg.o common.o buffer.o levels.o pmodels.o context.o bitio.o \
-         arith.o arith_aux.o 
+         arith.o arith_aux.o
 #-----------------------------------------------------------------------------
 all:
 	$(MAKE) progs

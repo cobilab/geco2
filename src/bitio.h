@@ -1,8 +1,8 @@
 /******************************************************************************
 File:      bitio.h
 
-Authors:   John Carpinelli   (johnfc@ecr.mu.oz.au)          
-           Wayne Salamonsen  (wbs@mundil.cs.mu.oz.au)       
+Authors:   John Carpinelli   (johnfc@ecr.mu.oz.au)
+           Wayne Salamonsen  (wbs@mundil.cs.mu.oz.au)
            Lang Stuiver      (langs@cs.mu.oz.au)
 
 Purpose:   Data compression using a revised arithmetic coding method.
@@ -23,16 +23,16 @@ University of Aveiro, DETI/IEETA, 3810-193 Aveiro, Portugal
 December 1999
 
 ******************************************************************************
- 
+
   Bit and byte input output functions.
   Input/Output to stdin/stdout 1 bit at a time.
   Also byte i/o and fread/fwrite, so can keep a count of bytes read/written
-   
+
   Once bit functions are used for either the input or output stream,
   byte based functions are NOT safe to use, unless a
   flush_{input,output}stream is first called. (Since bits are buffered a
   char at a time, while bytes are output immediately)
- 
+
 ******************************************************************************/
 
 #ifndef BITIO_H
@@ -78,24 +78,24 @@ do {						\
     }						\
 } while (0)
 
-/* 
+/*
  * ADD_NEXT_INPUT_BIT(v, garbage_bits)
- * 
+ *
  * Returns a bit from stdin, by shifting 'v' left one bit, and adding
  * next bit as lsb (possibly reading upto garbage_bits extra bits beyond
  * valid input)
- * 
+ *
  * garbage_bits:  Number of bits (to nearest byte) past end of file to
  * be allowed to 'read' before printing an error message and halting.
  * This is needed by our arithmetic coding module when the FRUGAL_BITS
  * option is defined, as upto B_bits extra bits may be needed to keep
  * the code buffer full (although the actual bitvalue is not important)
  * at the end of decoding.
- * 
+ *
  * The buffer is not shifted, instead a bit flag (_in_bit_ptr) is moved
  * to point to the next bit that is to be read.  When it is zero, the
  * next byte is read, and it is reset to point to the msb.
- * 
+ *
  */
 #define ADD_NEXT_INPUT_BIT(v, garbage_bits, s)				\
 do {									\
