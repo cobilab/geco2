@@ -406,8 +406,8 @@ CModel **LoadReference(Parameters *P)
 int32_t main(int argc, char *argv[]){
   char        **p = *&argv, **xargv, *xpl = NULL;
   CModel      **refModels;
-  int32_t     xargc = 0;
-  uint32_t    n, k, refNModels;
+  int32_t     n, xargc = 0;
+  uint32_t    k, refNModels;
   uint64_t    totalBytes, headerBytes, totalSize;
   clock_t     stop = 0, start = clock();
   
