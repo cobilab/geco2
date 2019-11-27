@@ -417,13 +417,13 @@ ModelPar ArgsUniqModel(char *str, uint8_t type)
       models_exit = 1;
       }
 
-    if(ir < 0 || ir > 2)
+    if(ir > 2)
       {
       fprintf(stderr, "ERROR: Invalid Alpha denominator!\n");
       models_exit = 1;
       }
 
-    if(hash < 0 || hash > 255)
+    if(hash > 255)
       {
       fprintf(stderr, "ERROR: Invalid cache-hash size!\n");
       models_exit = 1;
@@ -435,13 +435,13 @@ ModelPar ArgsUniqModel(char *str, uint8_t type)
       models_exit = 1;
       }
 
-    if(edits < 0 || edits > 20)
+    if(edits > 20)
       {
       fprintf(stderr, "ERROR: Invalid number of editions (substitutions)!\n");
       models_exit = 1;
       }
 
-    if(eDen < 0 || eDen > MAX_DEN)
+    if(eDen > MAX_DEN)
       {
       fprintf(stderr, "ERROR: Invalid Alpha denominator (substitutions)!\n");
       models_exit = 1;
