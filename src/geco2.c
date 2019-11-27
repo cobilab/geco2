@@ -20,8 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S O R - - - - - - - - - - - - - -
 
-void Compress(Parameters *P, CModel **cModels, uint8_t id, uint32_t 
-refNModels, INF *I){
+void Compress(Parameters *P, CModel **cModels, uint8_t id, INF *I){
   FILE        *Reader  = Fopen(P->tar[id], "r");
   char        *name    = concatenate(P->tar[id], ".co");
   FILE        *Writter = Fopen(name, "w");
@@ -514,7 +513,7 @@ int32_t main(int argc, char *argv[]){
   totalBytes  = 0;
   headerBytes = 0;
   for(n = 0 ; n < P->nTar ; ++n){
-    Compress(P, refModels, n, refNModels, I);
+    Compress(P, refModels, n, I);
     totalSize   += I[n].size;
     totalBytes  += I[n].bytes;
     headerBytes += I[n].header;
