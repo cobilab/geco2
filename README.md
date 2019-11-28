@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/pratas/geco2)
+[![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/cobilab/geco2)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
 <p align="center"><img src="imgs/logo.png" 
