@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/pratas/geco2)
+[![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/cobilab/geco2)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
 <p align="center"><img src="imgs/logo.png" 
@@ -104,7 +104,7 @@ If you are not interested in setting the template for each model, then use the l
 
 On using this software/method please cite:
 
-D. Pratas, A. J. Pinho, P. J. S. G. Ferreira. Efficient compression of genomic sequences. Proc. of the Data Compression Conference, DCC-2016, Snowbird, UT, p. 231-240, March 2016.
+Pratas, Diogo, Morteza Hosseini, and Armando J. Pinho. "GeCo2: An Optimized Tool for Lossless Compression and Analysis of DNA Sequences." International Conference on Practical Applications of Computational Biology & Bioinformatics. Springer, Cham, 2019.
 
 ## NEW FEATURES IN VERSION 2 ##
 

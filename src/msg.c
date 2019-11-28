@@ -32,10 +32,10 @@ void ModelsExplanation(void){
   "                   stand for higher RAM).                               \n"
   "           [NB_G]: (real [0;1)) real number to define gamma. This value \n"
   "                   represents the decayment forgetting factor of the    \n"
-  "                   regular context model in definition.                 \n"         
+  "                   regular context model in definition.                 \n"
   "           [NB_S]: (integer [0;20]) maximum number of editions allowed  \n"
   "                   to use a substitutional tolerant model with the same \n"
-  "                   memory model of the regular context model with       \n" 
+  "                   memory model of the regular context model with       \n"
   "                   order size equal to [NB_C]. The value 0 stands for   \n"
   "                   turning the tolerant context model off. When the     \n"
   "                   model is on, it pauses when the number of editions   \n"
@@ -53,11 +53,12 @@ void ModelsExplanation(void){
   "                   analogous to [NB_D], however to be only used in the  \n"
   "                   probabilistic model for computing the statistics of  \n"
   "                   the substitutional tolerant context model.           \n"
-  "           [NB_A]: (real [0;1)) real number to define gamma. This value \n"        
+  "           [NB_A]: (real [0;1)) real number to define gamma. This value \n"
   "                   represents the decayment forgetting factor of the    \n"
   "                   substitutional tolerant context model in definition. \n"
   "                   Its definition and use is analogus to [NB_G].        \n"
-  "                                                                        \n"
+  "                                                                        \n");
+  fprintf(stderr,
   "      ... (you may use several target models with custom parameters)    \n"
   "                                                                        \n"
   "      -rm [NB_C]:[NB_D]:[NB_I]:[NB_H]:[NB_G]/[NB_S]:[NB_E]:[NB_A]       \n"
@@ -67,7 +68,7 @@ void ModelsExplanation(void){
   "                                                                        \n"
   "      ... (you may use several reference models with custom parameters) \n"
   "                                                                        \n");
-  } 
+  }
 
 void PrintMenuCompression(void){
   fprintf(stderr,
@@ -212,15 +213,16 @@ void PrintMenuDecompression(void){
   "           File(s) to decompress (last argument).                       \n"
   "           For more files use splitting \":\" characters.               \n"
   "           Example: file1.txt:file2.txt:file3.txt.                      \n"
-  "                                                                        \n"
+  "                                                                        \n",
+  VERSION, RELEASE);
+  fprintf(stderr,
   "COPYRIGHT                                                               \n"
   "      Copyright (C) 2014-2019, IEETA, University of Aveiro.             \n"
   "      This is a Free software, under GPLv3. You may redistribute        \n"
   "      copies of it under the terms of the GNU - General Public          \n"
   "      License v3 <http://www.gnu.org/licenses/gpl.html>. There          \n"
   "      is NOT ANY WARRANTY, to the extent permitted by law.              \n"
-  "                                                                        \n",
-  VERSION, RELEASE);
+  "                                                                        \n");
   }
 
 void PrintVersion(void){

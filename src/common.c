@@ -18,8 +18,8 @@ float *logTable;
 uint32_t FLog2(uint64_t i)
   {
   uint32_t n, m, k = 32, o = (i & (i - 1)) ? 1 : 0;
-  static const uint64_t sizes[6] = 
-  { 0x0000000000000002ull, 0x000000000000000Cull, 0x00000000000000F0ull, 
+  static const uint64_t sizes[6] =
+  { 0x0000000000000002ull, 0x000000000000000Cull, 0x00000000000000F0ull,
     0x000000000000FF00ull, 0x00000000FFFF0000ull, 0xFFFFFFFF00000000ull };
 
   for(n = 6 ; n-- ; )
@@ -36,9 +36,9 @@ uint32_t FLog2(uint64_t i)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        Pow function from http://martin.ankerl.com/2007/10/04/
 //        optimized-pow-approximation-for-java-and-c-c/
-double Power (double base, double exponent) 
+double Power (double base, double exponent)
   {
-  union 
+  union
     {
     double d;
     int x[2];
@@ -164,8 +164,8 @@ uint64_t FopenBytesInFile(const char *fn)
   {
   uint64_t size = 0;
   FILE *file = Fopen(fn, "r");
-  
-  size = NBytesInFile(file);  
+
+  size = NBytesInFile(file);
   fclose(file);
 
   return size;
@@ -176,7 +176,7 @@ uint64_t FopenBytesInFile(const char *fn)
 void FillLogTable(uint32_t nSym, uint32_t alphaDen, uint32_t maxCHigh)
   {
   uint32_t n, maxSize = nSym * maxCHigh * alphaDen;
- 
+
   logTable = (float *) Malloc(maxSize * sizeof(float));
   for(n = 1 ; n != maxSize ; ++n)
     logTable[n] = FLog2(n);
@@ -254,7 +254,7 @@ FILE *Fopen(const char *path, const char *mode)
 
   if(file == NULL)
     {
-    fprintf(stderr, "Error opening: %s (mode %s). Does the file exist?\n", 
+    fprintf(stderr, "Error opening: %s (mode %s). Does the file exist?\n",
     path, mode);
     exit(1);
     }
@@ -262,7 +262,7 @@ FILE *Fopen(const char *path, const char *mode)
   return file;
   }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 uint8_t *ReverseStr(uint8_t *str, uint32_t end)
   {
@@ -325,7 +325,7 @@ char *concatenate(char *a, char *b)
 char *RepString(const char *str, const char *old, const char *new)
   {
   size_t sLen = strlen(str) + 1;
-  char *cout = 0, *p = 0, *tmp; 
+  char *cout = 0, *p = 0, *tmp;
 
   if(!(p = (cout = (char *) Malloc(sLen * sizeof(char)))))
     return 0;
@@ -333,7 +333,7 @@ char *RepString(const char *str, const char *old, const char *new)
     if((*str & 0xc0) != 0x80 && !strncmp(str, old, strlen(old)))
       {
       p   -= (intptr_t) cout;
-      tmp  = strcpy(p = (cout = (char *) Realloc(cout, sLen += strlen(new) - 
+      tmp  = strcpy(p = (cout = (char *) Realloc(cout, sLen += strlen(new) -
              strlen(old), strlen(new) - strlen(old))) + (intptr_t) p, new);
       p   += strlen(tmp);
       str += strlen(old);
@@ -346,7 +346,7 @@ char *RepString(const char *str, const char *old, const char *new)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-uint32_t ArgsNum(uint32_t d, char *a[], uint32_t n, char *s, char *s2, 
+uint32_t ArgsNum(uint32_t d, char *a[], uint32_t n, char *s, char *s2,
 uint32_t l, uint32_t u)
   {
   uint32_t x;
@@ -399,9 +399,9 @@ ModelPar ArgsUniqModel(char *str, uint8_t type)
   uint32_t  ctx, den, ir, hash, edits, eDen, models_exit = 0;
   double    gamma, eGamma;
   ModelPar  Mp;
- 
 
-  if(sscanf(str, "%u:%u:%u:%u:%lf/%u:%u:%lf", &ctx, &den, &ir, &hash, &gamma, 
+
+  if(sscanf(str, "%u:%u:%u:%u:%lf/%u:%u:%lf", &ctx, &den, &ir, &hash, &gamma,
     &edits, &eDen, &eGamma) == 8)
     {
 
@@ -417,13 +417,13 @@ ModelPar ArgsUniqModel(char *str, uint8_t type)
       models_exit = 1;
       }
 
-    if(ir < 0 || ir > 2)
+    if(ir > 2)
       {
       fprintf(stderr, "ERROR: Invalid Alpha denominator!\n");
       models_exit = 1;
       }
 
-    if(hash < 0 || hash > 255)
+    if(hash > 255)
       {
       fprintf(stderr, "ERROR: Invalid cache-hash size!\n");
       models_exit = 1;
@@ -435,13 +435,13 @@ ModelPar ArgsUniqModel(char *str, uint8_t type)
       models_exit = 1;
       }
 
-    if(edits < 0 || edits > 20)
+    if(edits > 20)
       {
       fprintf(stderr, "ERROR: Invalid number of editions (substitutions)!\n");
       models_exit = 1;
       }
 
-    if(eDen < 0 || eDen > MAX_DEN)
+    if(eDen > MAX_DEN)
       {
       fprintf(stderr, "ERROR: Invalid Alpha denominator (substitutions)!\n");
       models_exit = 1;
@@ -490,7 +490,7 @@ char *ArgsFiles(char *arg[], uint32_t argc, char *str)
   for( ; --n ; )
     if(!strcmp(str, arg[n]))
       return CloneString(arg[n+1]);
-  
+
   return concatenate(concatenate(arg[argc-2], arg[argc-1]), ".svg");
   }
 
@@ -540,7 +540,7 @@ int32_t StrToArgv(char *s, char ***v){
 uint32_t ReadFNames(Parameters *P, char *arg)
   {
   uint32_t nFiles = 1, k = 0, argLen;
-  
+
   argLen = strlen(arg);
   for( ; k != argLen ; ++k)
     if(arg[k] == ':')
@@ -570,7 +570,7 @@ void CalcProgress(uint64_t size, uint64_t i)
 uint8_t CmpCheckSum(uint32_t cs, uint32_t checksum)
   {
   if(checksum != cs)
-    { 
+    {
     fprintf(stderr, "Error: invalid reference file!\n"
     "Compression reference checksum ................. %u\n"
     "Decompression reference checksum ............... %u\n",
@@ -587,23 +587,23 @@ void PrintArgs(Parameters *P)
   {
   uint32_t n;
 
-  fprintf(stderr, "Force mode ......................... %s\n", P->force == 0 ? 
+  fprintf(stderr, "Force mode ......................... %s\n", P->force == 0 ?
   "no" : "yes");
 
   for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].type == 1)
       {
       fprintf(stderr, "Reference model %d:\n", n+1);
-      fprintf(stderr, "  [+] Context order ................ %u\n", 
+      fprintf(stderr, "  [+] Context order ................ %u\n",
       P->model[n].ctx);
-      fprintf(stderr, "  [+] Alpha denominator ............ %u\n", 
+      fprintf(stderr, "  [+] Alpha denominator ............ %u\n",
       P->model[n].den);
       switch(P->model[n].ir)
         {
         case 0:
         fprintf(stderr, "  [+] Inverted repeats ............. no (only regular)\n");
         break;
-        case 1: 
+        case 1:
         fprintf(stderr, "  [+] Inverted repeats ............. mix (regular and inverted)\n");
         break;
         case 2:
@@ -663,7 +663,7 @@ void PrintArgs(Parameters *P)
     fprintf(stderr, "Reference filename ................. %s\n", P->ref);
   fprintf(stderr, "Target files (%u):\n", P->nTar);
   for(n = 0 ; n < P->nTar ; ++n)
-    fprintf(stderr, "  [+] Filename %-2u .................. %s\n", n + 1, 
+    fprintf(stderr, "  [+] Filename %-2u .................. %s\n", n + 1,
     P->tar[n]);
   }
 

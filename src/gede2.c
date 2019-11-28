@@ -21,7 +21,7 @@
 
 void Decompress(Parameters *P, CModel **cModels, uint8_t id){
   FILE        *Reader  = Fopen(P->tar[id], "r");
-  char        *name    = ReplaceSubStr(P->tar[id], ".co", ".de"); 
+  char        *name    = ReplaceSubStr(P->tar[id], ".co", ".de");
   FILE        *Writter = Fopen(name, "w");
   uint64_t    nSymbols = 0;
   uint32_t    n, k, cModel, totModels;
@@ -37,7 +37,7 @@ void Decompress(Parameters *P, CModel **cModels, uint8_t id){
   #endif
 
   if(P->verbose)
-    fprintf(stderr, "Decompressing %"PRIu64" symbols of target %d ...\n", 
+    fprintf(stderr, "Decompressing %"PRIu64" symbols of target %d ...\n",
     P[id].size, id + 1);
 
   startinputtingbits();
@@ -126,7 +126,7 @@ void Decompress(Parameters *P, CModel **cModels, uint8_t id){
 
     ComputeMXProbs(PT, MX, 4);
 
-    symbolBuffer->buf[symbolBuffer->idx] = sym = ArithDecodeSymbol(4, 
+    symbolBuffer->buf[symbolBuffer->idx] = sym = ArithDecodeSymbol(4,
     (int *) MX->freqs, (int) MX->sum, Reader);
     outBuffer[idxOut] = NumToDNASym(sym);
 
@@ -181,7 +181,7 @@ void Decompress(Parameters *P, CModel **cModels, uint8_t id){
     UpdateCBuffer(symbolBuffer);
     }
 
-  if(idxOut != 0) 
+  if(idxOut != 0)
     fwrite(outBuffer, 1, idxOut, Writter);
 
   finish_decode();
@@ -209,7 +209,7 @@ void Decompress(Parameters *P, CModel **cModels, uint8_t id){
   fclose(Reader);
 
   if(P->verbose == 1)
-    fprintf(stderr, "Done!                          \n");  // SPACES ARE VALID 
+    fprintf(stderr, "Done!                          \n");  // SPACES ARE VALID
   }
 
 
@@ -236,7 +236,7 @@ CModel **LoadReference(Parameters *P)
   symbolBuffer  = (uint8_t *) Calloc(BUFFER_SIZE + BGUARD+1, sizeof(uint8_t));
   symbolBuffer += BGUARD;
 
-  cModels = (CModel **) Malloc(P->nModels * sizeof(CModel *)); 
+  cModels = (CModel **) Malloc(P->nModels * sizeof(CModel *));
   for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].type == REFERENCE)
       cModels[n] = CreateCModel(REFERENCE, P->model[n].ctx, P->model[n].den,
@@ -284,7 +284,7 @@ CModel **LoadReference(Parameters *P)
       if(sym != 'A' && sym != 'C' && sym != 'G' && sym != 'T')
         continue;
 
-      symbolBuffer[idx] = sym = DNASymToNum(sym);      
+      symbolBuffer[idx] = sym = DNASymToNum(sym);
       P->checksum = (P->checksum + (uint8_t) sym);
 
       for(n = 0 ; n < P->nModels ; ++n)
@@ -305,8 +305,8 @@ CModel **LoadReference(Parameters *P)
       CalcProgress(nBases, ++i);
       #endif
       }
- 
-  P->checksum %= CHECKSUMGF; 
+
+  P->checksum %= CHECKSUMGF;
   for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].type == REFERENCE)
       ResetCModelIdx(cModels[n]);
@@ -315,11 +315,11 @@ CModel **LoadReference(Parameters *P)
   fclose(Reader);
 
   if(P->verbose == 1)
-    fprintf(stderr, "Done!                          \n");  // SPACES ARE VALID  
+    fprintf(stderr, "Done!                          \n");  // SPACES ARE VALID
 
   return cModels;
   }
-  
+
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - M A I N - - - - - - - - - - - - - - - - -
@@ -327,14 +327,14 @@ CModel **LoadReference(Parameters *P)
 
 int32_t main(int argc, char *argv[]){
   char        **p = *&argv;
-  CModel      **refModels; 
+  CModel      **refModels;
   uint32_t    n, k, *checksum, refNModels = 0;
   Parameters  *P;
   FILE        *Reader = NULL;
   uint8_t     help, verbose, force, nTar = 1;
   clock_t     stop = 0, start = clock();
-  
-  if((help = ArgsState(DEFAULT_HELP, p, argc, "-h", "--help")) == 1 
+
+  if((help = ArgsState(DEFAULT_HELP, p, argc, "-h", "--help")) == 1
   || argc < 2){
     PrintMenuDecompression();
     return EXIT_SUCCESS;
@@ -400,7 +400,7 @@ int32_t main(int argc, char *argv[]){
 
   if(P->verbose)
     PrintArgs(P);
- 
+
   if(refNModels > 0 && P[0].ref == NULL){
     fprintf(stderr, "Error: using reference model(s) in nonexistent "
     "reference sequence!\n");
@@ -413,7 +413,7 @@ int32_t main(int argc, char *argv[]){
     refModels = (CModel **) Malloc(P->nModels * sizeof(CModel *));
 
   if(P->verbose && refNModels != 0)
-    fprintf(stderr, "Checksum: %"PRIu64"\n", P->checksum); 
+    fprintf(stderr, "Checksum: %"PRIu64"\n", P->checksum);
 
   for(n = 0 ; n < nTar ; ++n){
     if(refNModels != 0){

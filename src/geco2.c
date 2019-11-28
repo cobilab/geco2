@@ -20,14 +20,13 @@
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S O R - - - - - - - - - - - - - -
 
-void Compress(Parameters *P, CModel **cModels, uint8_t id, uint32_t 
-refNModels, INF *I){
+void Compress(Parameters *P, CModel **cModels, uint8_t id, INF *I){
   FILE        *Reader  = Fopen(P->tar[id], "r");
   char        *name    = concatenate(P->tar[id], ".co");
   FILE        *Writter = Fopen(name, "w");
   uint32_t    n, k, cModel, totModels, idxPos;
   uint64_t    compressed = 0, nSymbols = 0, nBases = 0;
-  uint8_t     *readBUF, sym, irSym, *pos, type = 0, 
+  uint8_t     *readBUF, sym, irSym, *pos, type = 0,
               header = 1, line = 0, dna = 0;
   PModel      **pModel, *MX;
   FloatPModel *PT;
@@ -49,7 +48,7 @@ refNModels, INF *I){
     IAE = Fopen(IAEName, "w");
     }
   #endif
- 
+
   sym = fgetc(Reader);
   switch(sym){
     case '>': type = 1; break;
@@ -66,10 +65,10 @@ refNModels, INF *I){
 
   _bytes_output = 0;
   nSymbols      = NBytesInFile(Reader);
-  
+
   // EXTRA MODELS DERIVED FROM EDITS
   totModels = P->nModels;
-  for(n = 0 ; n < P->nModels ; ++n) 
+  for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].edits != 0)
       totModels += 1;
 
@@ -85,13 +84,13 @@ refNModels, INF *I){
 
   for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].type == TARGET)
-      cModels[n] = CreateCModel(TARGET, P->model[n].ctx, P->model[n].den, 
-      P->model[n].ir, P->model[n].hashSize, P->model[n].gamma, 
+      cModels[n] = CreateCModel(TARGET, P->model[n].ctx, P->model[n].den,
+      P->model[n].ir, P->model[n].hashSize, P->model[n].gamma,
       P->model[n].edits, P->model[n].eDen, P->model[n].eGamma);
 
   if(P->verbose)
     {
-    fprintf(stdout, "Done!\nCompressing target sequence %d [bases:" 
+    fprintf(stdout, "Done!\nCompressing target sequence %d [bases:"
     "%"PRIu64"] ...\n", id + 1, nBases);
     }
 
@@ -115,7 +114,7 @@ refNModels, INF *I){
       {
       WriteNBits(cModels[n]->SUBS.eDen,             BITS_E_ALPHA_DEN, Writter);
       WriteNBits((int) (cModels[n]->SUBS.eGamma*65534), BITS_E_GAMMA, Writter);
-      }  
+      }
     }
 
   // GIVE SPECIFIC GAMMA:
@@ -158,7 +157,7 @@ refNModels, INF *I){
         }
 
       // REMOVE SPECIAL SYMBOLS [WINDOWS TXT ISSUES]
-      if(sym < 65 || sym > 122) continue; 
+      if(sym < 65 || sym > 122) continue;
 
       // FINAL FILTERING DNA CONTENT
       if(sym != 'A' && sym != 'C' && sym != 'G' && sym != 'T'){
@@ -192,7 +191,7 @@ refNModels, INF *I){
         ++n;
         }
 
-      /* 
+      /*
       for(n = 0 ; n < totModels ; ++n)
         {
         printf("%.3lf\t", WM->weight[n]);
@@ -216,7 +215,7 @@ refNModels, INF *I){
           {
           switch(cModels[n]->ir)
             {
-            case 0: 
+            case 0:
             UpdateCModelCounter(cModels[n], sym, cModels[n]->pModelIdx);
             break;
             case 1:
@@ -281,7 +280,7 @@ refNModels, INF *I){
   fclose(Reader);
 
   if(P->verbose == 1)
-    fprintf(stdout, "Done!                          \n");  // SPACES ARE VALID 
+    fprintf(stdout, "Done!                          \n");  // SPACES ARE VALID
 
   I[id].bytes = _bytes_output;
   I[id].size  = compressed;
@@ -297,7 +296,7 @@ CModel **LoadReference(Parameters *P)
   uint32_t  n, k, idxPos;
   uint64_t  nBases = 0, y_bases = 0;
   int32_t   idx = 0;
-  uint8_t   *readerBuffer, *symbolBuffer, sym, irSym = 0, type = 0, header = 1, 
+  uint8_t   *readerBuffer, *symbolBuffer, sym, irSym = 0, type = 0, header = 1,
             line = 0, dna = 0;
   CModel    **cModels;
   #ifdef PROGRESS
@@ -310,15 +309,15 @@ CModel **LoadReference(Parameters *P)
   readerBuffer  = (uint8_t *) Calloc(BUFFER_SIZE + 1, sizeof(uint8_t));
   symbolBuffer  = (uint8_t *) Calloc(BUFFER_SIZE + BGUARD+1, sizeof(uint8_t));
   symbolBuffer += BGUARD;
-  cModels       = (CModel **) Malloc(P->nModels * sizeof(CModel *)); 
+  cModels       = (CModel **) Malloc(P->nModels * sizeof(CModel *));
   for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].type == REFERENCE)
-      cModels[n] = CreateCModel(REFERENCE, P->model[n].ctx, P->model[n].den, 
-      P->model[n].ir, P->model[n].hashSize, P->model[n].gamma, 
+      cModels[n] = CreateCModel(REFERENCE, P->model[n].ctx, P->model[n].den,
+      P->model[n].ir, P->model[n].hashSize, P->model[n].gamma,
       P->model[n].edits, P->model[n].eDen, P->model[n].eGamma);
 
   sym = fgetc(Reader);
-  switch(sym){ 
+  switch(sym){
     case '>': type = 1; break;
     case '@': type = 2; break;
     default : type = 0;
@@ -382,8 +381,8 @@ CModel **LoadReference(Parameters *P)
       if(nBases > 100) CalcProgress(nBases, ++i);
       #endif
       }
- 
-  P->checksum %= CHECKSUMGF; 
+
+  P->checksum %= CHECKSUMGF;
   for(n = 0 ; n < P->nModels ; ++n)
     if(P->model[n].type == REFERENCE)
       ResetCModelIdx(cModels[n]);
@@ -392,13 +391,13 @@ CModel **LoadReference(Parameters *P)
   fclose(Reader);
 
   if(P->verbose == 1)
-    fprintf(stdout, "Done!                          \n");  // SPACES ARE VALID  
+    fprintf(stdout, "Done!                          \n");  // SPACES ARE VALID
   else
     fprintf(stdout, "                               \n");  // SPACES ARE VALID
 
   return cModels;
   }
-  
+
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - M A I N - - - - - - - - - - - - - - - - -
@@ -407,16 +406,16 @@ CModel **LoadReference(Parameters *P)
 int32_t main(int argc, char *argv[]){
   char        **p = *&argv, **xargv, *xpl = NULL;
   CModel      **refModels;
-  int32_t     xargc = 0;
-  uint32_t    n, k, refNModels;
+  int32_t     n, xargc = 0;
+  uint32_t    k, refNModels;
   uint64_t    totalBytes, headerBytes, totalSize;
   clock_t     stop = 0, start = clock();
-  
+
   Parameters  *P;
   INF         *I;
 
   P = (Parameters *) Malloc(1 * sizeof(Parameters));
-  if((P->help = ArgsState(DEFAULT_HELP, p, argc, "-h", "--help")) == 1 
+  if((P->help = ArgsState(DEFAULT_HELP, p, argc, "-h", "--help")) == 1
   || argc < 2){
     PrintMenuCompression();
     return EXIT_SUCCESS;
@@ -428,7 +427,7 @@ int32_t main(int argc, char *argv[]){
     }
 
   if(ArgsState(0, p, argc, "-s", "--show-levels")){
-    PrintLevels(); 
+    PrintLevels();
     return EXIT_SUCCESS;
     }
 
@@ -449,7 +448,7 @@ int32_t main(int argc, char *argv[]){
 
   if(P->nModels == 0 && P->level == 0)
     P->level = DEFAULT_LEVEL;
-  
+
   if(P->level != 0){
     xpl = GetLevels(P->level);
     xargc = StrToArgv(xpl, &xargv);
@@ -492,7 +491,7 @@ int32_t main(int argc, char *argv[]){
   P->ref      = ArgsString (NULL, p, argc, "-r", "--reference");
   P->nTar     = ReadFNames (P, argv[argc-1]);
   P->checksum = 0;
-  if(P->verbose) 
+  if(P->verbose)
     PrintArgs(P);
 
   if(refNModels == 0)
@@ -514,7 +513,7 @@ int32_t main(int argc, char *argv[]){
   totalBytes  = 0;
   headerBytes = 0;
   for(n = 0 ; n < P->nTar ; ++n){
-    Compress(P, refModels, n, refNModels, I);
+    Compress(P, refModels, n, I);
     totalSize   += I[n].size;
     totalBytes  += I[n].bytes;
     headerBytes += I[n].header;
@@ -522,19 +521,19 @@ int32_t main(int argc, char *argv[]){
 
   if(P->nTar > 1)
     for(n = 0 ; n < P->nTar ; ++n){
-      fprintf(stdout, "File %d compressed bytes: %"PRIu64" (", n+1, (uint64_t) 
+      fprintf(stdout, "File %d compressed bytes: %"PRIu64" (", n+1, (uint64_t)
       I[n].bytes);
       PrintHRBytes(I[n].bytes);
-      fprintf(stdout, ") , Normalized Dissimilarity Rate: %.6g\n", 
+      fprintf(stdout, ") , Normalized Dissimilarity Rate: %.6g\n",
       (8.0*I[n].bytes)/(2*I[n].size));
       }
 
 
   fprintf(stdout, "Total bytes: %"PRIu64" (", totalBytes);
   PrintHRBytes(totalBytes);
-  fprintf(stdout, "), %.4g bpb, %.4g bps w/ no header, Normalized Dissimilarity" 
+  fprintf(stdout, "), %.4g bpb, %.4g bps w/ no header, Normalized Dissimilarity"
   " Rate: %.6g\n", ((8.0*totalBytes)/totalSize), ((8.0*(totalBytes-headerBytes))
-  /totalSize), (8.0*totalBytes)/(2.0*totalSize));  
+  /totalSize), (8.0*totalBytes)/(2.0*totalSize));
   stop = clock();
   fprintf(stdout, "Spent %g sec.\n", ((double)(stop-start))/CLOCKS_PER_SEC);
 

@@ -13,9 +13,9 @@
 #define MAX_COLLISIONS        10
 
 #if defined(PREC32B)
-  #define MAX_HASH_CTX        28 
+  #define MAX_HASH_CTX        28
 #elif defined(PREC16B)
-  #define MAX_HASH_CTX        20 
+  #define MAX_HASH_CTX        20
 #else
   #define MAX_HASH_CTX        16
 #endif
@@ -95,7 +95,7 @@ uint64_t        GetPModelIdxCorr     (U8 *, CModel *, uint64_t);
 void            CorrectCModelSUBS    (CModel *, PModel *, uint8_t);
 void            ResetCModelIdx       (CModel *);
 void            UpdateCModelCounter  (CModel *, U32, U64);
-CModel          *CreateCModel        (U8, U32, U32, U32, U32, double, 
+CModel          *CreateCModel        (U8, U32, U32, U32, U32, double,
                                      U32, U32, double);
 void            ComputePModel        (CModel *, PModel *, uint64_t, uint32_t);
 double          PModelSymbolNats     (PModel *, U32);
