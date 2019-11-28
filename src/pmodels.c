@@ -41,7 +41,7 @@ void ResetWeightModel(CMWeight *CMW){
 
 void RenormalizeWeights(CMWeight *CMW){
   uint32_t n;
-  for(n = 0 ; n < CMW->totModels ; ++n) 
+  for(n = 0 ; n < CMW->totModels ; ++n)
     CMW->weight[n] /= CMW->totalWeight;
   }
 
@@ -51,7 +51,7 @@ void CalcDecayment(CMWeight *CMW, PModel **PM, uint8_t sym){
   uint32_t n;
   CMW->totalWeight = 0;
   for(n = 0 ; n < CMW->totModels ; ++n){
-    CMW->weight[n] = Power(CMW->weight[n], CMW->gamma[n]) * 
+    CMW->weight[n] = Power(CMW->weight[n], CMW->gamma[n]) *
                      (double) PM[n]->freqs[sym] / PM[n]->sum;
     CMW->totalWeight += CMW->weight[n];
     }

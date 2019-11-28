@@ -4,7 +4,7 @@
 #include "defs.h"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// COMPRESSION LEVELS FOR DNA 
+// COMPRESSION LEVELS FOR DNA
 //
 
 

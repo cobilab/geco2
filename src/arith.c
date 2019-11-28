@@ -141,19 +141,19 @@ do {						\
  */
 void arithmetic_encode(freq_value low, freq_value high, freq_value total,
   FILE *s)
-{ 
+{
   /* The following pseudocode is a concise (but slow due to arithmetic
    * calculations) description of what is calculated in this function.
    * Note that the division is done before the multiplication.  This is
    * one of the key points of this version of arithmetic coding.  This means
    * that much larger frequency values can be accomodated, but that the integer
-   * ratio R/total (code range / frequency range) 
+   * ratio R/total (code range / frequency range)
    * becomes a worse approximation as the total frequency count
    * is increased.  Therefore less than the whole code range will be
    * allocated to the frequency range.  The whole code range is used by
    * assigning the symbol at the end of the frequency range (where high==total)
    * this excess code range above and beyond its normal code range.  This
-   * of course distorts the probabilities slightly, 
+   * of course distorts the probabilities slightly,
    * see the paper connected with this program for details and compression
    * results.
    *
@@ -179,10 +179,10 @@ void arithmetic_encode(freq_value low, freq_value high, freq_value total,
    *						* (see comments below) *
    */
 
-    code_value temp; 
+    code_value temp;
 
    {
-    div_value out_r;			
+    div_value out_r;
     out_r = out_R/total;		/* Calc range:freq ratio */
     temp = out_r*low;			/* Calc low increment */
     out_L += temp;			/* Increase L */
@@ -197,7 +197,7 @@ void arithmetic_encode(freq_value low, freq_value high, freq_value total,
 
     if (out_bits_outstanding > MAX_BITS_OUTSTANDING)
     {
-/* 
+/*
  * For MAX_BITS_OUTSTANDING to be exceeded is extremely improbable, but
  * it is possible.  For this to occur the COMPRESSED file would need to
  * contain a sequence MAX_BITS_OUTSTANDING bits long (eg: 2^31 bits, or
@@ -208,9 +208,9 @@ void arithmetic_encode(freq_value low, freq_value high, freq_value total,
  * the probability for any 256 megabyte section causing an overflow
  * would be 1 in 2^(2^31).  This is a number approximately 600 million
  * digits long (decimal).
- * 
+ *
  */
-	
+
 	fprintf(stderr,"Bits_outstanding limit reached - File too large\n");
 	exit(1);
     }
@@ -233,7 +233,7 @@ void arithmetic_encode(freq_value low, freq_value high, freq_value total,
  *				* Dividing by (R/total) translates it	*
  *				* to its correspoding frequency value	*
  *
- *				
+ *
  *  if (target < total) 	* The approximate calculations mean the *
  *	return target;		* encoder may have coded outside the	*
  *  else			* valid frequency range (in the excess	*
@@ -246,7 +246,7 @@ void arithmetic_encode(freq_value low, freq_value high, freq_value total,
 freq_value arithmetic_decode_target(freq_value total)
 {
     freq_value target;
-    
+
     in_r = in_R/total;
     target = (in_D)/in_r;
 
@@ -277,7 +277,7 @@ freq_value arithmetic_decode_target(freq_value total)
 
 void arithmetic_decode(freq_value low, freq_value high, freq_value total,
   FILE *s)
-{     
+{
     code_value temp;
 
     /* assume r has been set by decode_target */
@@ -325,14 +325,14 @@ void finish_encode(FILE *s)
         BIT_PLUS_FOLLOW(((bits >> (nbits-i)) & 1), s);
 }
 
-/* 
+/*
  * start_decode() start the decoder Fills the decode value in_D from the
  * bitstream.  If FRUGAL_BITS is defined only the first call reads in_D
  * from the bitstream.  Subsequent calls will assume the excess bits
  * that had been read but not used (sitting in in_V) are the start of
  * the next coding message, and it will put these into in_D.  (It also
  * initialises in_V to the start of the bitstream)
- * 
+ *
  * FRUGAL_BITS also means that the first bit (0) was not output, so only
  * take B_bits-1 from the input stream.  Since there are B_bits
  * "read-ahead" in the buffer, on second and subsequent calls
@@ -355,7 +355,7 @@ void start_decode(FILE *s)
 	}
 }
 
-/* 
+/*
  * finish_decode()
  *
  * Throw away B_bits in buffer by doing nothing

@@ -1,8 +1,8 @@
 /******************************************************************************
 File:      bitio.c
 
-Authors:   John Carpinelli   (johnfc@ecr.mu.oz.au)          
-           Wayne Salamonsen  (wbs@mundil.cs.mu.oz.au)       
+Authors:   John Carpinelli   (johnfc@ecr.mu.oz.au)
+           Wayne Salamonsen  (wbs@mundil.cs.mu.oz.au)
            Lang Stuiver      (langs@cs.mu.oz.au)
 
 Purpose:   Data compression using a revised arithmetic coding method.
@@ -34,7 +34,7 @@ December 1999
 #include <stdio.h>
 #include "bitio.h"
 
-/* 
+/*
  * The following variables are supposedly local, but actually global so they
  * can be referenced by macro
  */

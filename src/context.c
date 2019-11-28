@@ -23,7 +23,7 @@ static uint64_t ZHASH(uint64_t z){
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-static void InitHashTable(CModel *M, U32 c){ 
+static void InitHashTable(CModel *M, U32 c){
   uint32_t k;
   M->hTable.maxC    = c;
   M->hTable.index   = (ENTMAX *) Calloc(HASH_SIZE, sizeof(ENTMAX));
@@ -65,7 +65,7 @@ static void InsertKey(HashTable *H, U32 hi, U64 idx, U8 s){
   H->entries[hi][H->index[hi]].key = (U16)(idx&0xffff);
   #else
   H->entries[hi][H->index[hi]].key = (U8)(idx&0xff);
-  #endif  
+  #endif
   H->entries[hi][H->index[hi]].counters = (0x01<<(s<<2));
   }
 
@@ -120,7 +120,7 @@ void GetHCCounters(HashTable *H, U64 key, PModel *P, uint32_t a){
   P->freqs[1] = 1;
   P->freqs[2] = 1;
   P->freqs[3] = 1;
-  P->sum      = 4; 
+  P->sum      = 4;
   return;
   }
 
@@ -164,7 +164,7 @@ void UpdateCModelCounter(CModel *M, U32 sym, U64 im){
     }
   else{
     AC = &M->array.counters[idx << 2];
-    if(++AC[sym] == M->maxCount){    
+    if(++AC[sym] == M->maxCount){
       AC[0] >>= 1;
       AC[1] >>= 1;
       AC[2] >>= 1;
@@ -175,7 +175,7 @@ void UpdateCModelCounter(CModel *M, U32 sym, U64 im){
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-CModel *CreateCModel(U8 ref, U32 ctx, U32 aDen, U32 ir, U32 hSize, 
+CModel *CreateCModel(U8 ref, U32 ctx, U32 aDen, U32 ir, U32 hSize,
 double gamma, U32 edits, U32 eDen, double eGamma)
   {
   CModel *M = (CModel *) Calloc(1, sizeof(CModel));
@@ -184,7 +184,7 @@ double gamma, U32 edits, U32 eDen, double eGamma)
 
   if(ctx > MAX_HASH_CTX)
     {
-    fprintf(stderr, "Error: context size cannot be greater than %d\n", 
+    fprintf(stderr, "Error: context size cannot be greater than %d\n",
     MAX_HASH_CTX);
     exit(1);
     }
@@ -289,7 +289,7 @@ void FailSUBS(CModel *M){
       ++fails;
   if(fails <= M->SUBS.threshold)
     ShiftBuffer(M->SUBS.mask, M->ctx, 1);
-  else 
+  else
     M->SUBS.in = 0;
   }
 
@@ -321,7 +321,7 @@ void CorrectCModelSUBS(CModel *M, PModel *P, uint8_t sym){
         if(best == sym) HitSUBS(M);
         else{
           FailSUBS(M);
-          M->SUBS.seq->buf[M->SUBS.seq->idx] = best; 
+          M->SUBS.seq->buf[M->SUBS.seq->idx] = best;
           } // UPDATE BUFFER WITH NEW SYMBOL
         }
     }

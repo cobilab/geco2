@@ -46,8 +46,8 @@ void *Calloc(size_t nmemb, size_t size)
 void *Realloc(void *ptr, size_t size, size_t additionalSize)
   {
   void *pointer = realloc(ptr, size);
-	
-  if(pointer == NULL) 
+
+  if(pointer == NULL)
     {
     fprintf(stderr, "Error allocating %zu bytes.\n", size);
     exit(1);
