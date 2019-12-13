@@ -191,14 +191,6 @@ void Compress(Parameters *P, CModel **cModels, uint8_t id, INF *I){
         ++n;
         }
 
-      /*
-      for(n = 0 ; n < totModels ; ++n)
-        {
-        printf("%.3lf\t", WM->weight[n]);
-        }
-      printf("\n");
-      */
-
       ComputeMXProbs(PT, MX, 4);
 
       AESym(sym, (int *)(MX->freqs), (int) MX->sum, Writter);
@@ -361,14 +353,27 @@ CModel **LoadReference(Parameters *P)
 
       for(n = 0 ; n < P->nModels ; ++n)
         if(P->model[n].type == REFERENCE){
+ 
           GetPModelIdx(symbolBuffer+idx-1, cModels[n]);
-          if(cModels[n]->ir == 1)                        // Inverted repeats
-            irSym = GetPModelIdxIR(symbolBuffer+idx, cModels[n]);
-          // UPDATE ONLY IF IDX LARGER THAT CONTEXT
-          if(y_bases >= cModels[n]->ctx){
+	  
+	  // UPDATE ONLY IF IDX LARGER THAT CONTEXT
+          switch(cModels[n]->ir)
+            {
+            case 0:
             UpdateCModelCounter(cModels[n], sym, cModels[n]->pModelIdx);
-            if(cModels[n]->ir == 1)                        // Inverted repeats
-              UpdateCModelCounter(cModels[n], irSym, cModels[n]->pModelIdxIR);
+            break;
+            case 1:
+            UpdateCModelCounter(cModels[n], sym, cModels[n]->pModelIdx);
+            irSym = GetPModelIdxIR(symbolBuffer+idx, cModels[n]);
+            UpdateCModelCounter(cModels[n], irSym, cModels[n]->pModelIdxIR);
+            break;
+            case 2:
+            irSym = GetPModelIdxIR(symbolBuffer+idx, cModels[n]);
+            UpdateCModelCounter(cModels[n], irSym, cModels[n]->pModelIdxIR);
+            break;
+            default:
+            UpdateCModelCounter(cModels[n], sym, cModels[n]->pModelIdx);
+            break;
             }
           }
       ++y_bases;
