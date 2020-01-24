@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/cobilab/geco2)
+![Conda](https://img.shields.io/conda/dn/bioconda/geco2)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
 <p align="center"><img src="imgs/logo.png" 
@@ -16,7 +17,13 @@ GeCo2 can afford:
 
 ## INSTALLATION ##
 
-Cmake is needed for installation (http://www.cmake.org/). You can download it directly from http://www.cmake.org/cmake/resources/software.html or use an appropriate packet manager. In the following instructions we show the procedure to install, compile and run GeCo2:
+### Conda
+Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html), then run the following:
+```bash
+conda install -y -c bioconda geco2
+```
+
+Otherwise, CMake is needed for installation (http://www.cmake.org/). You can download it directly from http://www.cmake.org/cmake/resources/software.html or use an appropriate packet manager. In the following instructions we show the procedure to install, compile and run GeCo2:
 
 ### STEP 1
 
@@ -41,7 +48,7 @@ mv Makefile.linux Makefile
 make
 </pre>
 
-#### OS X
+#### macOS
 Install brew:
 <pre>
 ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
