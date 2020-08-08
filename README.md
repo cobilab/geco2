@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/pratas/geco2.svg?branch=master)](https://travis-ci.org/cobilab/geco2)
 ![Conda](https://img.shields.io/conda/dn/bioconda/geco2)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
