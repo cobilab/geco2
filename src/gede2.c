@@ -43,6 +43,7 @@ void Decompress(Parameters *P, CModel **cModels, uint8_t id){
   startinputtingbits();
   start_decode(Reader);
 
+  uint64_t garbage;
   P[id].watermark           = ReadNBits(BITS_WATERMARK,   Reader);
   garbage                   = ReadNBits(BITS_CHECKSUM,    Reader);
   P[id].size                = ReadNBits(BITS_SIZE,        Reader);
